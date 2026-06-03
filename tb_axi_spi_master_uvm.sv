@@ -112,7 +112,7 @@ endclass  //axi_spi_seq
 class axi_spi_continuous_seq extends uvm_sequence #(axi_spi_seq_item);
     `uvm_object_utils(axi_spi_continuous_seq)
 
-    int num_trans = 500;
+    int num_trans = 15000;
 
     function new(string name = "axi_spi_continuous_seq");
         super.new(name);
@@ -135,20 +135,20 @@ class axi_spi_corner_seq extends uvm_sequence #(axi_spi_seq_item);
     `uvm_object_utils(axi_spi_corner_seq)
 
     logic [7:0] patterns[] = '{
-        8'h00,
-        8'hFF,  // All 0, All 1
-        8'h55,
-        8'hAA,  // Toggle 0101, 1010
-        8'h01,
-        8'h02,
-        8'h04,
-        8'h08,  // Walking 1s (LSB ~)
-        8'h10,
-        8'h20,
-        8'h40,
-        8'h80,  // Walking 1s (~ MSB)
-        8'hFE,
-        8'h7F  // Walking 0s (LSB 0, MSB 0)
+        8'h00,  // All 0
+        8'hFF,  // All 1
+        8'h55,  // 01010101
+        8'hAA,  // 10101010
+        8'h01,  // 00000001
+        8'h02,  // 00000010
+        8'h04,  // 00000100
+        8'h08,  // 00001000
+        8'h10,  // 00010000
+        8'h20,  // 00100000
+        8'h40,  // 01000000
+        8'h80,  // 10000000
+        8'hFE,  // 11111110
+        8'h7F   // 01111111
     };
 
     function new(string name="axi_spi_corner_seq");
