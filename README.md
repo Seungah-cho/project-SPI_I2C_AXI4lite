@@ -51,9 +51,9 @@ MicroBlaze 기반 SoC 환경에서 AXI4-Lite 인터페이스를 사용하는 SPI
 
 AXI4-Lite 기반 Master IP를 설계하였으며,
 
-SPI 버전과 I2C 버전을 구현하였다.
+SPI 버전과 I2C 버전을 구현하였습니다.
 
-MicroBlaze는 Control/Status Register를 통해 각 IP를 제어한다.
+MicroBlaze는 Control/Status Register를 통해 각 IP를 제어합니다.
 
 ## AXI-SPI Master
 
@@ -122,7 +122,8 @@ SPI Master IP에 대해 UVM 기반 검증 환경을 구축하였습니다.
 
 > UVM Architecture
 
-(이미지 삽입)
+<img width="1018" height="795" alt="UVM 구조" src="https://github.com/user-attachments/assets/19b2ba7b-db30-49bb-9a5b-dd96a02c9f31" />
+
 
 ---
 
@@ -310,13 +311,15 @@ RX = 0x27
 
 ### Problem
 
-Slave 버튼 입력이 정상적으로 반영되지 않는 문제 발생
+Slave 버튼 입력이 Master로 정상 반영되지 않는 문제 발생.
+Logic Analyzer에서 MISO를 통해 버튼 데이터가 수신되는 것 확인하였지만, Master는 버튼 입력을 인식하지 못해 Master의 동작이 변경되지 않음.
 
 ### Cause
 
-CPU가 Start 명령 직후 Done 비트를 읽으면서 이전 Transaction의 Done 값을 읽어옴.
-
-즉, Hardware가 Status Register를 갱신하기 전에 Software가 먼저 접근하는 타이밍 문제가 발생하였다.
+SPI 전송 완료를 done 플래그로 판단.
+이 과정에서 start 신호가 의도보다 길게 유지되어 SPI Master FSM이 동일한 전송을 여러 차례 반복 수행.
+Logic Analyzer의 파형을 통해 동일한 MOSI 데이터가 연속적으로 전송되었으며(SCLK 32개 발생), 최초에 수신한 유효한 버튼 데이터(0x20)가 이후 반복 전송 과정에서 수신된 0x00 데이터로 RX register에 덮어써짐을 확인함.
+CPU는 최종적으로 저장된 0x00을 읽어 버튼 입력을 인식하지 못함.
 
 ### Solution
 
@@ -332,7 +335,7 @@ Busy == 0 확인
 
 ### Learned
 
-HW와 SW 간의 동기화에서는 Pulse 신호보다 Level 신호가 더 안정적인 경우가 있음을 확인하였다.
+HW와 SW 간의 동기화에서는 Pulse 신호보다 Level 신호가 더 안정적인 경우가 있음을 확인하였습니다.
 
 ---
 
