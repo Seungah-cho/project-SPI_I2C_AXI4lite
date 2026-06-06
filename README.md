@@ -308,34 +308,39 @@ RX = 0x27
 # Issues & Debugging
 
 ## SPI Status Register Synchronization Issue
+<img width="1042" height="470" alt="SPI master 잘못된 파형" src="https://github.com/user-attachments/assets/63258792-ebd1-47be-87df-6bc5892507d5" />
+<img width="948" height="476" alt="SPI master 잘 나온 파형" src="https://github.com/user-attachments/assets/b0a4b3f0-8047-4ba5-a269-f6cc0abceab1" />
+(위) 문제 파형 / (아래) 정상 파형
 
 ### Problem
 
 Slave 버튼 입력이 Master로 정상 반영되지 않는 문제 발생.
+
 Logic Analyzer에서 MISO를 통해 버튼 데이터가 수신되는 것 확인하였지만, Master는 버튼 입력을 인식하지 못해 Master의 동작이 변경되지 않음.
 
 ### Cause
 
-SPI 전송 완료를 done 플래그로 판단.
-이 과정에서 start 신호가 의도보다 길게 유지되어 SPI Master FSM이 동일한 전송을 여러 차례 반복 수행.
+SPI 전송 완료를 DONE 플래그로 판단.
+
+이 과정에서 START 신호가 의도보다 길게 유지되어 SPI Master FSM이 동일한 전송을 여러 차례 반복 수행.
+
 Logic Analyzer의 파형을 통해 동일한 MOSI 데이터가 연속적으로 전송되었으며(SCLK 32개 발생), 최초에 수신한 유효한 버튼 데이터(0x20)가 이후 반복 전송 과정에서 수신된 0x00 데이터로 RX register에 덮어써짐을 확인함.
+
 CPU는 최종적으로 저장된 0x00을 읽어 버튼 입력을 인식하지 못함.
 
 ### Solution
 
-Done 비트 대신 Busy 비트를 사용하도록 수정
+DONE 대신 BUSY 플래그를 사용하여 SPI FSM이 실제로 동작을 시작했는지 먼저 확인한 후 START 비트를 즉시 클리어하도록 수정.
 
-```text
-Before
-Done == 1 확인
+이후 BUSY가 LOW(0)가 될 때까지 대기하여 전송 완료 확인.
 
-After
-Busy == 0 확인
-```
+이를 통해 START 신호를 펄스 형태로 제어하여 중복 전송 방지.
+
+최초 수신한 버튼 데이터가 RX 레지스터에 정상적으로 유지되어 Slave 버튼 입력을 안정적으로 인식할 수 있도록 개선.
 
 ### Learned
 
-HW와 SW 간의 동기화에서는 Pulse 신호보다 Level 신호가 더 안정적인 경우가 있음을 확인하였습니다.
+Logic Analyzer를 활용해 SPI 파형을 분석하며 Software-Hardware 간 상태 동기화 문제를 직접 해결한 경험을 얻었습니다. 이를 통해 BUSY/DONE 신호를 이용한 핸드셰이크 설계의 중요성과 실제 파형 기반 디버깅의 필요성을 체감할 수 있었으며, 검증 과정에서 원인을 분석하고 해결하는 문제 해결 능력을 향상시킬 수 있었습니다.
 
 ---
 
