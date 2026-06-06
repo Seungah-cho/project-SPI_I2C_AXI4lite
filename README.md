@@ -187,6 +187,7 @@ Single-bit Shift Pattern (8'h01, 8'h02, 8'h04 ... 8'h80, 8'hFE, 8'h7F)
 ```
 
 ### Result
+<img width="2518" height="1204" alt="image" src="https://github.com/user-attachments/assets/20046913-d903-4d2e-acaf-8ac1feeddbbb" />
 
 모든 패턴 정상 동작
 
@@ -262,6 +263,8 @@ RX = 0x27
 ---
 
 # FPGA Demonstration
+<img width="1280" height="434" alt="SPI,I2C보드 사진" src="https://github.com/user-attachments/assets/31fcbeb6-2063-48bf-bc56-7170d22af9dc" />
+
 
 ## SPI Demo
 
