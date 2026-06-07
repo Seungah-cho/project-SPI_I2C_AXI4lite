@@ -110,15 +110,34 @@ AXI-SPI Master에서 SPI 통신부만 I2C 통신으로 바꿨습니다.
 # Verification
 
 SPI Master IP에 대해 UVM 기반 검증 환경을 구축하였습니다.
+AXI4-Lite Slave 인터페이스를 제공하는 SPI Master IP를 대상으로, UVM Driver가 AXI Master 역할을 수행하여 레지스터 접근 및 SPI 동작을 검증하였습니다.
 
 ## Verification Environment
 
 ### Components
 
-* Sequencer
-* Driver
-* Monitor
-* Scoreboard
+* **Sequencer**
+  * TX 데이터, CPOL/CPHA 설정 등의 Transaction 생성
+
+* **Driver**
+  * AXI4-Lite Master 역할 수행
+  * TXDATA, CTRL, STATUS, RXDATA 레지스터 접근을 통해 SPI Master 제어
+  * Status Register Polling을 통해 SPI Transaction 완료 확인
+
+* **Monitor**
+  * AXI4-Lite Read/Write Transaction 모니터링
+  * 송신 데이터(TXDATA) 및 수신 데이터(RXDATA) 수집
+
+* **Scoreboard**
+  * Loopback 환경에서 송신 데이터(MOSI)와 수신 데이터(MISO) 비교
+  * Data Mismatch 검출 및 결과 통계 제공
+
+### Verification Scope
+
+* AXI4-Lite Slave Register Read/Write 동작 검증
+* SPI Master 데이터 송수신 기능 검증
+* CPOL/CPHA 설정에 따른 SPI 동작 검증
+* Loopback 환경 기반 데이터 무결성 검증
 
 > UVM Architecture
 
