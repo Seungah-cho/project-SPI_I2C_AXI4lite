@@ -124,19 +124,18 @@ AXI4-Lite Slave 인터페이스를 제공하는 SPI Master IP를 대상으로, U
   * TXDATA, CTRL, STATUS, RXDATA 레지스터 접근을 통해 SPI Master 제어
   * Status Register Polling을 통해 SPI Transaction 완료 확인
 
-* **Monitor**
-  * AXI4-Lite Read/Write Transaction 모니터링
-  * 송신 데이터(TXDATA) 및 수신 데이터(RXDATA) 수집
+* Monitor
+  * AXI4-Lite TXDATA Write 및 RXDATA Read Transaction 모니터링
+  * TXDATA 및 RXDATA 값을 수집하여 Scoreboard로 전달
 
-* **Scoreboard**
-  * Loopback 환경에서 송신 데이터(MOSI)와 수신 데이터(MISO) 비교
-  * Data Mismatch 검출 및 결과 통계 제공
+* Scoreboard
+  * Loopback 환경에서 TXDATA와 RXDATA 값 비교
+  * Data Mismatch 검출 및 Pass/Fail 통계 제공
 
 ### Verification Scope
 
 * AXI4-Lite Slave Register Read/Write 동작 검증
 * SPI Master 데이터 송수신 기능 검증
-* CPOL/CPHA 설정에 따른 SPI 동작 검증
 * Loopback 환경 기반 데이터 무결성 검증
 
 > UVM Architecture
