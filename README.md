@@ -257,7 +257,6 @@ TX = 0x27
 RX = 0x27
 ```
 
-<img width="1886" height="812" alt="기 본2" src="https://github.com/user-attachments/assets/e6885505-9536-42f5-9907-4567dc8a6b2d" />
 <img width="1896" height="818" alt="기본 기능 테스트" src="https://github.com/user-attachments/assets/3cbbd966-6040-4bff-8737-c0431ba8aabd" />
 <img width="1886" height="812" alt="기 본2" src="https://github.com/user-attachments/assets/c05164c5-7f36-4721-b052-930ddbff1214" />
 
