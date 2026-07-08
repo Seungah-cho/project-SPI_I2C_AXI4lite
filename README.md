@@ -31,7 +31,8 @@ MicroBlaze 기반 SoC 환경에서 AXI4-Lite 인터페이스를 사용하는 SPI
 
 > Architecture Diagram
 
-(이미지 삽입)
+<img width="1881" height="938" alt="spi_i2c" src="https://github.com/user-attachments/assets/b6db329a-5168-4540-a60e-0b13db63e829" />
+
 
 ---
 
@@ -211,13 +212,13 @@ Single-bit Shift Pattern (8'h01, 8'h02, 8'h04 ... 8'h80, 8'hFE, 8'h7F)
 
 ---
 
-## Test Scenario #4 : Reset Test
+## Test Scenario #4 : Reset Test (Planned)
 
 ### Objective
 
 통신 중 강제 Reset 상황 검증
 
-((((((((((((((((((((((((((((((((((((((((((((((((((((((( 추가하기 )))))))))))))))))))))))))))))))))))))))))
+향후 SPI Master IP의 신뢰성을 더욱 높이기 위해 다양한 예외 상황과 오류 조건에 대한 검증을 추가할 예정이다.
 
 ---
 
@@ -256,7 +257,9 @@ TX = 0x27
 RX = 0x27
 ```
 
-(Waveform 이미지 삽입)
+<img width="1886" height="812" alt="기 본2" src="https://github.com/user-attachments/assets/e6885505-9536-42f5-9907-4567dc8a6b2d" />
+<img width="1896" height="818" alt="기본 기능 테스트" src="https://github.com/user-attachments/assets/3cbbd966-6040-4bff-8737-c0431ba8aabd" />
+<img width="1886" height="812" alt="기 본2" src="https://github.com/user-attachments/assets/c05164c5-7f36-4721-b052-930ddbff1214" />
 
 ---
 
@@ -266,7 +269,8 @@ RX = 0x27
 
 * PASS
 
-(결과 이미지 삽입)
+<img width="1793" height="933" alt="연속동작 테스터" src="https://github.com/user-attachments/assets/4e4824a4-18db-4bd1-8be0-5bbeb0ea4154" />
+
 
 ---
 
@@ -276,7 +280,7 @@ RX = 0x27
 
 * PASS
 
-(Coverage Report 이미지 삽입)
+<img width="2507" height="1193" alt="코너케이서" src="https://github.com/user-attachments/assets/e6cabac3-3277-49f0-ba44-16f7f1b69524" />
 
 ---
 
@@ -301,7 +305,8 @@ RX = 0x27
 * Up Counter Mode
 * Clock Mode
 
-(동작 영상 삽입)
+https://github.com/user-attachments/assets/fb688394-88f3-41db-9ebf-e84032a562c0
+
 
 ---
 
@@ -322,7 +327,7 @@ RX = 0x27
 * Up Counter Mode
 * Clock Mode
 
-(동작 영상 삽입)
+https://github.com/user-attachments/assets/525221f0-afd4-4b80-86e5-6d48e380b1f0
 
 ---
 
